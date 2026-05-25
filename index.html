@@ -3,638 +3,709 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Savannah's Direction Detective 🌟</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Savannah's Direction Detective 💖</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@400;600&display=swap');
         
         :root {
-            --primary-pink: #ff9ff3;
-            --soft-green: #86efac;
-            --soft-red: #fca5a5;
+            --purple: #9B59B6;
+            --teal: #1ABC9C;
+            --pink: #FF69B4;
+            --soft-bg: #FFF5F8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Fredoka', 'Comic Neue', system-ui, sans-serif;
+            font-family: 'Fredoka', 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #E8F8F5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #4A4A6A;
         }
         
-        .game-card {
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
-            transition: transform 0.2s ease;
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(155, 89, 182, 0.2);
+            overflow: hidden;
+            border: 8px solid #9B59B6;
         }
         
-        .big-char {
+        header {
+            background: linear-gradient(to right, #9B59B6, #FF69B4);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-heart {
+            position: absolute;
+            font-size: 60px;
+            top: -15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .header-heart.left { left: 30px; }
+        .header-heart.right { right: 30px; animation-delay: 1.5s; }
+        
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            text-shadow: 3px 3px 0 #6C3483;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+        }
+        
+        .main-content {
+            padding: 50px 60px;
+            text-align: center;
+        }
+        
+        .welcome-screen {
+            display: block;
+        }
+        
+        .play-screen, .feedback-screen {
+            display: none;
+        }
+        
+        .big-letter {
             font-size: 220px;
             line-height: 1;
-            font-weight: 900;
-            text-shadow: 4px 4px 0px #fce7f3,
-                        -2px -2px 0px #fce7f3;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 700;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-block;
+            margin: 20px 0;
+            text-shadow: 4px 4px 0 #E8DAEF;
+            color: #5D4E8C;
         }
         
-        .direction-btn {
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        .letter-wrapper {
+            position: relative;
+            display: inline-block;
         }
         
-        .direction-btn:active {
-            transform: scale(0.92);
+        .letter-icon {
+            position: absolute;
+            font-size: 70px;
+            top: -30px;
+            right: -40px;
+            background: white;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 5px solid #9B59B6;
         }
         
-        .gentle-text {
-            color: #6b7280;
+        .question {
+            font-size: 1.8rem;
+            margin: 30px 0 40px;
+            color: #5D4E8C;
+            font-weight: 600;
         }
         
-        .confetti {
-            position: fixed;
-            z-index: 9999;
-            pointer-events: none;
-            font-size: 24px;
-            transition: transform 2.5s linear, opacity 2.5s ease;
+        .btn {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin: 10px;
+            min-width: 220px;
         }
         
-        .char-container {
-            background: linear-gradient(145deg, #ffffff, #fff0f7);
-            border: 12px solid #fce7f3;
+        .btn-yes {
+            background: linear-gradient(#1ABC9C, #16A085);
+            color: white;
         }
         
-        .nav-active {
-            background-color: #fce7f3;
-            color: #be185d;
+        .btn-yes:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(26, 188, 156, 0.4);
+        }
+        
+        .btn-no {
+            background: linear-gradient(#FF69B4, #E91E63);
+            color: white;
+        }
+        
+        .btn-no:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.4);
+        }
+        
+        .feedback-card {
+            background: #FFF5F8;
+            border-radius: 30px;
+            padding: 40px 50px;
+            max-width: 620px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(155, 89, 182, 0.15);
+            border: 6px solid #9B59B6;
+            position: relative;
+        }
+        
+        .feedback-heart {
+            font-size: 80px;
+            margin-bottom: 10px;
+            animation: bounce 1.2s ease infinite;
+        }
+        
+        .feedback-title {
+            font-size: 2.8rem;
+            color: #9B59B6;
+            margin-bottom: 15px;
             font-weight: 700;
         }
         
-        .stat-pill {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        .feedback-subtitle {
+            font-size: 1.45rem;
+            color: #5D4E8C;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+        
+        .comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+        
+        .compare-box {
+            text-align: center;
+        }
+        
+        .compare-label {
+            font-size: 1.1rem;
+            color: #7F8C8D;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .compare-letter {
+            font-size: 110px;
+            font-weight: 700;
+            line-height: 1;
+            transition: transform 0.4s ease;
+        }
+        
+        .correct-letter {
+            color: #1ABC9C;
+            text-shadow: 3px 3px 0 #A3E4D7;
+        }
+        
+        .what-you-saw {
+            color: #95A5A6;
+            opacity: 0.85;
+        }
+        
+        .arrow {
+            font-size: 3rem;
+            color: #9B59B6;
+            margin-top: 60px;
+        }
+        
+        .understand-btn {
+            background: linear-gradient(#9B59B6, #8E44AD);
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px 60px;
+            border-radius: 9999px;
+            box-shadow: 0 12px 30px rgba(155, 89, 182, 0.35);
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .understand-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .praise {
+            font-size: 2rem;
+            color: #1ABC9C;
+            font-weight: 700;
+            margin: 25px 0;
+            animation: pop 0.6s ease;
+        }
+        
+        .hearts {
+            font-size: 2.5rem;
+            margin: 15px 0;
+        }
+        
+        .footer {
+            background: #F8F0FF;
+            padding: 18px;
+            text-align: center;
+            font-size: 1.05rem;
+            color: #7D3C98;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .symmetric-note {
+            background: #E8F8F5;
+            border: 3px dashed #1ABC9C;
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin: 20px auto;
+            max-width: 420px;
+            font-size: 1.25rem;
+            color: #16A085;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 min-h-screen">
-    <!-- Header -->
-    <div class="max-w-4xl mx-auto pt-6 px-4">
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-x-3">
-                <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-400 rounded-3xl flex items-center justify-center shadow-xl">
-                    <i class="fa-solid fa-search text-white text-4xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-4xl font-black text-pink-600 tracking-tight">Savannah's</h1>
-                    <h1 class="text-5xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent -mt-2">Direction Detective</h1>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header>
+            <span class="header-heart left">💖</span>
+            <span class="header-heart right">🦋</span>
+            <h1>Savannah's Direction Detective</h1>
+            <p class="subtitle">Finding which letters are facing the right way! ✨</p>
+        </header>
+        
+        <div class="main-content">
+            
+            <!-- Welcome Screen -->
+            <div id="welcome-screen" class="welcome-screen">
+                <div style="font-size: 5rem; margin-bottom: 20px;">🕵️‍♀️💖</div>
+                <h2 style="font-size: 2.4rem; color: #9B59B6; margin-bottom: 15px;">Ready to be a super detective?</h2>
+                <p style="font-size: 1.5rem; max-width: 520px; margin: 0 auto 40px; line-height: 1.5;">
+                    We'll look at letters together.<br>
+                    Some need a little turn, some are perfect just as they are!<br>
+                    <strong>You are still learning and that's beautiful.</strong>
+                </p>
+                <button onclick="startGame()" class="btn btn-yes" style="font-size: 1.6rem; padding: 22px 55px;">
+                    Let's Play! 🌟
+                </button>
+                <div style="margin-top: 40px; font-size: 1.1rem; color: #9B59B6;">
+                    Made with extra love for Savannah 💕
                 </div>
             </div>
             
-            <div class="hidden md:flex items-center gap-x-2 bg-white/80 backdrop-blur px-4 py-2 rounded-3xl shadow">
-                <div class="flex items-center text-sm">
-                    <i class="fa-solid fa-heart text-pink-500 mr-1.5"></i>
-                    <span class="font-semibold text-pink-600">Made with love for Savannah</span>
+            <!-- Play Screen -->
+            <div id="play-screen" class="play-screen">
+                <div class="letter-wrapper" id="letter-wrapper">
+                    <div id="big-letter" class="big-letter">B</div>
+                    <div id="letter-icon" class="letter-icon"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- START SCREEN -->
-    <div id="start-screen" class="max-w-2xl mx-auto px-6">
-        <div class="bg-white rounded-[3rem] shadow-2xl p-10 text-center game-card">
-            <div class="mb-8">
-                <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-full mb-6 shadow-inner">
-                    <i class="fa-solid fa-graduation-cap text-6xl text-orange-600"></i>
-                </div>
-                <h2 class="text-4xl font-black text-gray-800 mb-3">Hi Savannah! 🌟</h2>
-                <p class="text-2xl text-gray-600 leading-snug">Let's help letters and numbers<br>find their <span class="font-bold text-pink-600">correct direction</span>!</p>
-            </div>
-            
-            <div class="mb-8">
-                <p class="text-lg text-gray-500 mb-4">Choose what you'd like to practice today:</p>
                 
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Letters -->
-                    <button onclick="startGame('letters')" 
-                            class="group flex flex-col items-center p-5 bg-gradient-to-br from-blue-100 to-cyan-100 hover:from-blue-200 hover:to-cyan-200 rounded-3xl transition-all active:scale-[0.985]">
-                        <i class="fa-solid fa-font text-5xl text-blue-600 mb-3 group-hover:scale-110 transition"></i>
-                        <span class="font-bold text-xl text-blue-700">Letters</span>
-                        <span class="text-xs text-blue-500">A - Z</span>
+                <div id="letter-label" style="font-size: 1.6rem; color: #7D3C98; margin-bottom: 10px; font-weight: 600;"></div>
+                
+                <p class="question" id="question-text">
+                    Is this facing the right way?
+                </p>
+                
+                <div style="margin-top: 20px;">
+                    <button onclick="handleAnswer(true)" class="btn btn-yes">
+                        ✨ Yes, it's perfect!
                     </button>
-                    
-                    <!-- Numbers -->
-                    <button onclick="startGame('numbers')" 
-                            class="group flex flex-col items-center p-5 bg-gradient-to-br from-emerald-100 to-teal-100 hover:from-emerald-200 hover:to-teal-200 rounded-3xl transition-all active:scale-[0.985]">
-                        <i class="fa-solid fa-hashtag text-5xl text-emerald-600 mb-3 group-hover:scale-110 transition"></i>
-                        <span class="font-bold text-xl text-emerald-700">Numbers</span>
-                        <span class="text-xs text-emerald-500">0 - 9</span>
+                    <button onclick="handleAnswer(false)" class="btn btn-no">
+                        💕 No, let's fix it together
                     </button>
-                    
-                    <!-- Tricky -->
-                    <button onclick="startGame('tricky')" 
-                            class="group flex flex-col items-center p-5 bg-gradient-to-br from-amber-100 to-yellow-100 hover:from-amber-200 hover:to-yellow-200 rounded-3xl transition-all active:scale-[0.985]">
-                        <i class="fa-solid fa-exclamation-triangle text-5xl text-amber-600 mb-3 group-hover:scale-110 transition"></i>
-                        <span class="font-bold text-xl text-amber-700">Tricky Ones</span>
-                        <span class="text-xs text-amber-500">b d p q 6 9...</span>
-                    </button>
-                    
-                    <!-- All -->
-                    <button onclick="startGame('all')" 
-                            class="group flex flex-col items-center p-5 bg-gradient-to-br from-purple-100 to-violet-100 hover:from-purple-200 hover:to-violet-200 rounded-3xl transition-all active:scale-[0.985]">
-                        <i class="fa-solid fa-infinity text-5xl text-purple-600 mb-3 group-hover:scale-110 transition"></i>
-                        <span class="font-bold text-xl text-purple-700">Everything!</span>
-                        <span class="text-xs text-purple-500">Mix it up</span>
-                    </button>
+                </div>
+                
+                <div style="margin-top: 35px; font-size: 1.1rem; color: #95A5A6;">
+                    Take your time, sweetie — there's no rush! 🐢
                 </div>
             </div>
             
-            <div class="text-center">
-                <button onclick="showHowToPlay()" 
-                        class="inline-flex items-center gap-x-2 text-pink-600 hover:text-pink-700 font-semibold text-sm underline decoration-dotted">
-                    <i class="fa-solid fa-question-circle"></i>
-                    <span>How to play</span>
+            <!-- Feedback / Teaching Screen -->
+            <div id="feedback-screen" class="feedback-screen">
+                <div class="feedback-card">
+                    <div style="text-align: center;">
+                        <div class="feedback-heart">💜</div>
+                        <h2 class="feedback-title">It's okay, sweetie 💖</h2>
+                        
+                        <p class="feedback-subtitle">
+                            Let's look together.<br>
+                            You are still learning and that's beautiful!
+                        </p>
+                        
+                        <div style="margin: 25px 0 15px; font-size: 1.3rem; color: #8E44AD; font-weight: 600;">
+                            Here's how it should look:
+                        </div>
+                        
+                        <div class="comparison">
+                            <!-- What you saw -->
+                            <div class="compare-box">
+                                <div class="compare-label">What you saw</div>
+                                <div id="feedback-what" class="compare-letter what-you-saw"></div>
+                            </div>
+                            
+                            <div style="font-size: 3.5rem; color: #9B59B6; margin-top: 55px;">→</div>
+                            
+                            <!-- Correct way -->
+                            <div class="compare-box">
+                                <div class="compare-label" style="color: #16A085;">Correct way</div>
+                                <div style="position: relative; display: inline-block;">
+                                    <div id="feedback-correct" class="compare-letter correct-letter"></div>
+                                    <div id="feedback-icon" class="letter-icon" style="top: -25px; right: -30px; font-size: 55px; border-color: #1ABC9C;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="nextRound()" class="btn understand-btn">
+                            I understand now →
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Praise Screen (for correct answers) -->
+            <div id="praise-screen" style="display: none; text-align: center; padding: 30px 20px;">
+                <div style="font-size: 6rem; margin-bottom: 15px;">🌟💖🌟</div>
+                <div id="praise-text" class="praise"></div>
+                <div class="hearts">💕 🦋 💕</div>
+                <button onclick="nextRound()" class="btn btn-yes" style="margin-top: 25px;">
+                    Next letter please! →
                 </button>
             </div>
+            
         </div>
         
-        <div class="text-center mt-6 text-xs text-gray-400">
-            A gentle homeschool tool • No timers • Lots of encouragement 💖
-        </div>
-    </div>
-
-    <!-- GAME SCREEN -->
-    <div id="game-screen" class="max-w-2xl mx-auto px-6 hidden">
-        <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden game-card">
-            
-            <!-- Game Header -->
-            <div class="px-8 pt-8 pb-4 bg-gradient-to-r from-pink-500/10 to-purple-500/10">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="flex items-center gap-x-2">
-                            <span id="round-info" class="font-bold text-pink-600 text-xl">Round 1 of 10</span>
-                        </div>
-                        <div class="flex items-center gap-x-4 mt-1">
-                            <div class="stat-pill px-3 py-1 rounded-2xl flex items-center text-sm">
-                                <i class="fa-solid fa-check text-green-500 mr-1.5"></i>
-                                <span id="score-text" class="font-bold text-gray-700">0 / 10</span>
-                            </div>
-                            <div class="stat-pill px-3 py-1 rounded-2xl flex items-center text-sm">
-                                <i class="fa-solid fa-fire text-orange-500 mr-1.5"></i>
-                                <span id="streak-text" class="font-bold text-gray-700">Streak: 0</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button onclick="endGameEarly()" 
-                            class="text-xs px-4 py-2 bg-white shadow rounded-2xl text-gray-400 hover:text-gray-600 flex items-center gap-x-1 transition">
-                        <i class="fa-solid fa-pause"></i>
-                        <span class="hidden sm:inline">End session</span>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Character Display -->
-            <div class="px-8 pt-4 pb-8 flex flex-col items-center">
-                <div class="mb-3 text-center">
-                    <p class="text-sm uppercase tracking-[2px] text-pink-500 font-semibold">Look carefully at this one...</p>
-                </div>
-                
-                <div id="char-container"
-                     class="char-container w-80 h-80 flex items-center justify-center rounded-[3.5rem] mb-6 relative">
-                    <div id="char-display" 
-                         class="big-char text-gray-800 select-none">A</div>
-                    
-                    <!-- Subtle sparkle decoration -->
-                    <div class="absolute -top-3 -right-3 text-4xl opacity-30">✨</div>
-                    <div class="absolute -bottom-2 -left-2 text-3xl opacity-30">🌸</div>
-                </div>
-                
-                <p class="text-2xl font-bold text-gray-700 mb-2">Is this facing the <span class="text-pink-600">right way</span>?</p>
-            </div>
-            
-            <!-- Answer Buttons -->
-            <div class="px-8 pb-10 grid grid-cols-2 gap-4">
-                <!-- Green - Correct -->
-                <button onclick="answer(true)"
-                        class="direction-btn group bg-gradient-to-br from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 text-white font-black text-2xl py-8 rounded-3xl flex flex-col items-center justify-center shadow-xl active:scale-[0.96]">
-                    <div class="flex items-center gap-x-3">
-                        <i class="fa-solid fa-check-circle text-4xl"></i>
-                        <span class="font-black">YES!</span>
-                    </div>
-                    <span class="text-sm font-normal opacity-90 mt-1">It's correct</span>
-                </button>
-                
-                <!-- Red - Flipped -->
-                <button onclick="answer(false)"
-                        class="direction-btn group bg-gradient-to-br from-rose-400 to-red-500 hover:from-rose-500 hover:to-red-600 text-white font-black text-2xl py-8 rounded-3xl flex flex-col items-center justify-center shadow-xl active:scale-[0.96]">
-                    <div class="flex items-center gap-x-3">
-                        <i class="fa-solid fa-times-circle text-4xl"></i>
-                        <span class="font-black">NO!</span>
-                    </div>
-                    <span class="text-sm font-normal opacity-90 mt-1">It's flipped</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- FEEDBACK MODAL -->
-    <div id="feedback-modal" onclick="if (event.target.id === 'feedback-modal') closeFeedback()" 
-         class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
-        <div onclick="event.stopImmediatePropagation()" 
-             class="bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl">
-            
-            <div id="feedback-icon" class="mx-auto mb-6 w-24 h-24 flex items-center justify-center text-7xl"></div>
-            
-            <h3 id="feedback-title" class="text-4xl font-black mb-3"></h3>
-            <p id="feedback-message" class="text-xl text-gray-600 mb-6 leading-snug"></p>
-            
-            <div id="correct-example" class="hidden mb-6 p-4 bg-pink-50 rounded-2xl">
-                <p class="text-sm text-pink-600 font-semibold mb-2">Here's how it should look:</p>
-                <div class="flex items-center justify-center gap-x-8">
-                    <div>
-                        <div id="wrong-version" class="text-6xl font-black text-gray-400"></div>
-                        <div class="text-xs text-gray-400 mt-1">What you saw</div>
-                    </div>
-                    <div class="text-pink-500">
-                        <i class="fa-solid fa-arrow-right text-3xl"></i>
-                    </div>
-                    <div>
-                        <div id="correct-version" class="text-6xl font-black text-emerald-600"></div>
-                        <div class="text-xs text-emerald-600 mt-1 font-semibold">Correct way</div>
-                    </div>
-                </div>
-            </div>
-            
-            <button onclick="nextRound()" 
-                    class="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black text-xl rounded-2xl shadow-lg active:scale-[0.985]">
-                <span id="next-button-text">Next one! →</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- END SCREEN -->
-    <div id="end-screen" class="max-w-xl mx-auto px-6 hidden">
-        <div class="bg-white rounded-[3rem] shadow-2xl p-10 text-center game-card">
-            <div class="mb-8">
-                <div class="text-8xl mb-4">🏆</div>
-                <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Amazing work, Savannah!</h2>
-                <p class="mt-3 text-xl text-gray-600">You are a true <span class="font-bold text-pink-600">Direction Detective</span>!</p>
-            </div>
-            
-            <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl p-8 mb-8">
-                <div class="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                        <div class="text-5xl font-black text-emerald-600" id="final-score">8</div>
-                        <div class="text-xs uppercase tracking-widest text-emerald-600 font-bold">Correct</div>
-                    </div>
-                    <div>
-                        <div class="text-5xl font-black text-orange-500" id="final-streak">7</div>
-                        <div class="text-xs uppercase tracking-widest text-orange-500 font-bold">Best Streak</div>
-                    </div>
-                    <div>
-                        <div class="text-5xl font-black text-purple-600" id="final-accuracy">80</div>
-                        <div class="text-xs uppercase tracking-widest text-purple-600 font-bold">% Accuracy</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="space-y-3">
-                <button onclick="restartGame()" 
-                        class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-xl rounded-2xl flex items-center justify-center gap-x-3 shadow-lg active:scale-[0.985]">
-                    <i class="fa-solid fa-redo"></i>
-                    <span>Play Again</span>
-                </button>
-                
-                <button onclick="goToStart()" 
-                        class="w-full py-4 border-2 border-gray-200 text-gray-600 font-semibold rounded-2xl flex items-center justify-center gap-x-2 hover:bg-gray-50 transition">
-                    <span>Choose a different set</span>
-                </button>
-            </div>
-            
-            <div class="mt-8 text-xs text-center text-gray-400">
-                You did such a wonderful job paying attention! 💖<br>
-                Mama is so proud of you.
-            </div>
+        <div class="footer">
+            <strong>Savannah's Direction Detective</strong> • Version 2 • Made with ❤️ for you, sweetie!
         </div>
     </div>
 
     <script>
-        // Tailwind script
-        function initTailwind() {
-            document.documentElement.style.setProperty('--accent', '#ff9ff3');
+        // Game data - letters with icons for the tricky ones
+        const gameLetters = [
+            { 
+                char: 'b', 
+                icon: '🔘', 
+                label: 'b — like a button or ball', 
+                type: 'tricky',
+                description: 'the letter b'
+            },
+            { 
+                char: 'd', 
+                icon: '🐶', 
+                label: 'd — like a dog', 
+                type: 'tricky',
+                description: 'the letter d'
+            },
+            { 
+                char: 'p', 
+                icon: '🐷', 
+                label: 'p — like a pig', 
+                type: 'tricky',
+                description: 'the letter p'
+            },
+            { 
+                char: 'q', 
+                icon: '👑', 
+                label: 'q — like a queen', 
+                type: 'tricky',
+                description: 'the letter q'
+            },
+            { 
+                char: 'A', 
+                icon: '', 
+                label: 'A', 
+                type: 'symmetric',
+                description: 'the letter A'
+            },
+            { 
+                char: 'H', 
+                icon: '', 
+                label: 'H', 
+                type: 'symmetric',
+                description: 'the letter H'
+            },
+            { 
+                char: 'Y', 
+                icon: '', 
+                label: 'Y', 
+                type: 'symmetric',
+                description: 'the letter Y'
+            },
+            { 
+                char: '0', 
+                icon: '', 
+                label: '0 (zero)', 
+                type: 'symmetric',
+                description: 'the number zero'
+            },
+            { 
+                char: 'C', 
+                icon: '', 
+                label: 'C', 
+                type: 'normal',
+                description: 'the letter C'
+            },
+            { 
+                char: 'S', 
+                icon: '', 
+                label: 'S', 
+                type: 'normal',
+                description: 'the letter S'
+            },
+            { 
+                char: '6', 
+                icon: '🐌', 
+                label: '6 — like a snail', 
+                type: 'tricky',
+                description: 'the number six'
+            },
+            { 
+                char: '9', 
+                icon: '🎈', 
+                label: '9 — like a balloon', 
+                type: 'tricky',
+                description: 'the number nine'
+            }
+        ];
+        
+        let currentLetter = null;
+        let currentTransform = '';
+        let isCorrectOrientation = false;
+        
+        function getRandomTransform() {
+            const rotations = [0, 90, 180, 270];
+            const rotation = rotations[Math.floor(Math.random() * rotations.length)];
+            const mirror = Math.random() > 0.5 ? -1 : 1;
+            
+            // 40% chance of correct (no rotation, no mirror)
+            if (Math.random() < 0.4) {
+                return { transform: 'rotate(0deg) scaleX(1)', isCorrect: true };
+            }
+            
+            return {
+                transform: `rotate(${rotation}deg) scaleX(${mirror})`,
+                isCorrect: false
+            };
         }
         
-        let currentMode = 'all';
-        let round = 0;
-        let score = 0;
-        let streak = 0;
-        let bestStreak = 0;
-        let currentChar = '';
-        let currentIsFlipped = false;
-        let totalRounds = 10;
-        
-        const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-        const NUMBERS = '0123456789'.split('');
-        const TRICKY = ['B','D','E','F','G','J','L','P','Q','R','S','Z','2','3','5','6','9','b','d','p','q','g'];
-        
-        function getCharSet(mode) {
-            if (mode === 'letters') return LETTERS;
-            if (mode === 'numbers') return NUMBERS;
-            if (mode === 'tricky') return TRICKY;
-            return [...LETTERS, ...NUMBERS];
-        }
-        
-        function startGame(mode) {
-            currentMode = mode;
-            round = 0;
-            score = 0;
-            streak = 0;
-            bestStreak = 0;
-            
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('end-screen').classList.add('hidden');
-            
+        function startGame() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('play-screen').style.display = 'block';
             nextRound();
         }
         
         function nextRound() {
-            closeFeedback();
+            // Hide all screens
+            document.getElementById('feedback-screen').style.display = 'none';
+            document.getElementById('praise-screen').style.display = 'none';
+            document.getElementById('play-screen').style.display = 'block';
             
-            round++;
-            if (round > totalRounds) {
-                endGame();
-                return;
-            }
+            // Pick random letter
+            currentLetter = gameLetters[Math.floor(Math.random() * gameLetters.length)];
             
-            // Update UI
-            document.getElementById('round-info').innerHTML = `Round <span class="font-black">${round}</span> of ${totalRounds}`;
-            document.getElementById('score-text').innerHTML = `${score} / ${totalRounds}`;
-            document.getElementById('streak-text').innerHTML = `Streak: ${streak} 🔥`;
-            
-            // Pick character
-            const charSet = getCharSet(currentMode);
-            currentChar = charSet[Math.floor(Math.random() * charSet.length)];
-            
-            // 50% chance of being flipped
-            currentIsFlipped = Math.random() < 0.5;
-            
-            // Display
-            const display = document.getElementById('char-display');
-            display.textContent = currentChar;
-            display.style.transform = currentIsFlipped ? 'scaleX(-1)' : 'scaleX(1)';
-            
-            // Gentle prompt change occasionally
-            const prompts = [
-                "Is this facing the right way?",
-                "Does this look correct to you?",
-                "Ready to check this one?",
-                "What do you think, Detective?"
-            ];
-            const promptEl = document.querySelector('#game-screen p');
-            if (promptEl) promptEl.innerHTML = prompts[Math.floor(Math.random() * prompts.length)];
-        }
-        
-        function answer(userSaysCorrect) {
-            const isActuallyCorrect = !currentIsFlipped;
-            const isRight = (userSaysCorrect === isActuallyCorrect);
-            
-            const display = document.getElementById('char-display');
-            const modal = document.getElementById('feedback-modal');
-            const iconContainer = document.getElementById('feedback-icon');
-            const title = document.getElementById('feedback-title');
-            const message = document.getElementById('feedback-message');
-            const exampleDiv = document.getElementById('correct-example');
-            const nextText = document.getElementById('next-button-text');
-            
-            exampleDiv.classList.add('hidden');
-            
-            if (isRight) {
-                // CORRECT!
-                score++;
-                streak++;
-                if (streak > bestStreak) bestStreak = streak;
-                
-                iconContainer.innerHTML = '<i class="fa-solid fa-star text-yellow-400 text-7xl animate-bounce"></i>';
-                title.innerHTML = 'Yes! You got it! 🌟';
-                title.className = 'text-4xl font-black text-emerald-600 mb-3';
-                
-                const correctPhrases = [
-                    "Your eyes are so sharp, Savannah!",
-                    "You spotted that perfectly!",
-                    "What a brilliant detective you are!",
-                    "That was exactly right — amazing!",
-                    "You make learning look like magic! ✨"
-                ];
-                message.innerHTML = correctPhrases[Math.floor(Math.random() * correctPhrases.length)];
-                message.className = 'text-xl text-emerald-700 mb-6';
-                
-                nextText.innerHTML = 'Next adventure! →';
-                
-                // Confetti!
-                launchConfetti();
-                
-                // Update score immediately
-                document.getElementById('score-text').innerHTML = `${score} / ${totalRounds}`;
-                document.getElementById('streak-text').innerHTML = `Streak: ${streak} 🔥`;
-                
+            // Get orientation
+            let orient;
+            if (currentLetter.type === 'symmetric') {
+                // Always show correctly for symmetric ones
+                orient = { transform: 'rotate(0deg) scaleX(1)', isCorrect: true };
             } else {
-                // WRONG - gentle feedback
-                streak = 0;
-                
-                iconContainer.innerHTML = '<i class="fa-solid fa-heart text-pink-400 text-7xl"></i>';
-                title.innerHTML = "It's okay, sweetie 💖";
-                title.className = 'text-4xl font-black text-pink-600 mb-3';
-                
-                message.innerHTML = "Let's look together. You are still learning and that's beautiful!";
-                message.className = 'text-xl text-gray-600 mb-4';
-                
-                // Show correct version
-                exampleDiv.classList.remove('hidden');
-                document.getElementById('wrong-version').innerHTML = currentChar;
-                document.getElementById('wrong-version').style.transform = currentIsFlipped ? 'scaleX(-1)' : 'scaleX(1)';
-                
-                const correctDisplay = document.getElementById('correct-version');
-                correctDisplay.innerHTML = currentChar;
-                correctDisplay.style.transform = currentIsFlipped ? 'scaleX(1)' : 'scaleX(-1)';
-                
-                nextText.innerHTML = 'I understand now →';
+                orient = getRandomTransform();
             }
             
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-        
-        function closeFeedback() {
-            const modal = document.getElementById('feedback-modal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-        }
-        
-        function launchConfetti() {
-            const colors = ['#ff9ff3', '#c084fc', '#60a5fa', '#4ade80', '#fbbf24'];
-            const emojis = ['✨', '🌟', '💖', '🌈', '🦋', '⭐'];
+            currentTransform = orient.transform;
+            isCorrectOrientation = orient.isCorrect;
             
-            for (let i = 0; i < 45; i++) {
-                setTimeout(() => {
-                    const conf = document.createElement('div');
-                    conf.className = 'confetti';
-                    conf.style.left = Math.random() * 100 + 'vw';
-                    conf.style.top = '-30px';
-                    conf.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    conf.style.fontSize = (Math.random() * 18 + 22) + 'px';
-                    conf.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    
-                    document.body.appendChild(conf);
-                    
-                    const duration = Math.random() * 1800 + 2200;
-                    const xDrift = (Math.random() - 0.5) * 180;
-                    
-                    conf.animate([
-                        { 
-                            transform: 'translateY(0) rotate(0deg)',
-                            opacity: 1 
-                        },
-                        { 
-                            transform: `translateY(${window.innerHeight + 120}px) translateX(${xDrift}px) rotate(${Math.random()*720 - 360}deg)`,
-                            opacity: 0 
-                        }
-                    ], {
-                        duration: duration,
-                        easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
-                    }).onfinish = () => conf.remove();
-                }, i * 4);
-            }
-        }
-        
-        function endGame() {
-            document.getElementById('game-screen').classList.add('hidden');
-            const endScreen = document.getElementById('end-screen');
-            endScreen.classList.remove('hidden');
+            // Update display
+            const letterEl = document.getElementById('big-letter');
+            const iconEl = document.getElementById('letter-icon');
+            const labelEl = document.getElementById('letter-label');
             
-            const accuracy = totalRounds > 0 ? Math.round((score / totalRounds) * 100) : 0;
+            letterEl.textContent = currentLetter.char;
+            letterEl.style.transform = currentTransform;
+            letterEl.style.color = '#5D4E8C';
             
-            document.getElementById('final-score').innerHTML = score;
-            document.getElementById('final-streak').innerHTML = bestStreak;
-            document.getElementById('final-accuracy').innerHTML = accuracy;
-            
-            // Special message based on performance
-            const endTitle = endScreen.querySelector('h2');
-            if (score === totalRounds) {
-                endTitle.innerHTML = "Perfect score! You are incredible! 🌟";
-            } else if (score >= 8) {
-                endTitle.innerHTML = "You did SO well, Savannah! 🥰";
-            } else if (score >= 5) {
-                endTitle.innerHTML = "Great effort! You're getting stronger every time!";
+            // Show icon if exists
+            if (currentLetter.icon) {
+                iconEl.innerHTML = currentLetter.icon;
+                iconEl.style.display = 'block';
             } else {
-                endTitle.innerHTML = "You tried your best and that's what matters most 💖";
+                iconEl.style.display = 'none';
+            }
+            
+            labelEl.innerHTML = currentLetter.label;
+            
+            // Question text
+            const qEl = document.getElementById('question-text');
+            if (currentLetter.type === 'symmetric') {
+                qEl.innerHTML = `Does the ${currentLetter.description} look good?`;
+            } else {
+                qEl.innerHTML = `Is the ${currentLetter.description} facing the right way?`;
             }
         }
         
-        function endGameEarly() {
-            if (confirm("Are you sure you want to finish early? You've done amazing so far!")) {
-                endGame();
-            }
-        }
-        
-        function restartGame() {
-            document.getElementById('end-screen').classList.add('hidden');
-            document.getElementById('start-screen').classList.remove('hidden');
-        }
-        
-        function goToStart() {
-            document.getElementById('end-screen').classList.add('hidden');
-            document.getElementById('start-screen').classList.remove('hidden');
-        }
-        
-        function showHowToPlay() {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center p-6 z-[200]';
-            modal.innerHTML = `
-                <div class="bg-white rounded-3xl max-w-lg w-full p-9 relative">
-                    <button onclick="this.closest('.fixed').remove()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600">
-                        <i class="fa-solid fa-times text-3xl"></i>
-                    </button>
-                    
-                    <div class="text-center mb-8">
-                        <div class="mx-auto w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center mb-5">
-                            <i class="fa-solid fa-book-open text-white text-4xl"></i>
-                        </div>
-                        <h3 class="text-3xl font-black text-pink-600">How to Play</h3>
-                    </div>
-                    
-                    <div class="space-y-6 text-lg text-gray-700">
-                        <div class="flex gap-4">
-                            <div class="w-9 h-9 flex-shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-black">1</div>
-                            <div>
-                                <strong>Look at the big letter or number</strong><br>
-                                <span class="text-sm text-gray-500">It will either be facing the right way or flipped like in a mirror.</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-4">
-                            <div class="w-9 h-9 flex-shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-black">2</div>
-                            <div>
-                                <strong>Tap the green button</strong> if it looks correct.<br>
-                                <strong>Tap the red button</strong> if it has been flipped.
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-4">
-                            <div class="w-9 h-9 flex-shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-black">3</div>
-                            <div>
-                                If you get it right — confetti and happy cheers!<br>
-                                If not — we'll gently show you the correct way. No worries!
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8 pt-6 border-t text-center">
-                        <p class="text-sm text-pink-600 font-medium">There are no wrong answers here — only learning and love! 💖</p>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
-        }
-        
-        // Keyboard support (for mama testing)
-        function setupKeyboard() {
-            document.addEventListener('keydown', function(e) {
-                const gameScreen = document.getElementById('game-screen');
-                if (gameScreen.classList.contains('hidden')) return;
+        function handleAnswer(userSaysYes) {
+            const playScreen = document.getElementById('play-screen');
+            const feedbackScreen = document.getElementById('feedback-screen');
+            const praiseScreen = document.getElementById('praise-screen');
+            
+            playScreen.style.display = 'none';
+            
+            const wasActuallyCorrect = isCorrectOrientation;
+            
+            if (userSaysYes === wasActuallyCorrect) {
+                // Correct answer!
+                let praiseMsg = '';
                 
-                if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'g') {
-                    answer(true); // Green / correct
-                } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'r') {
-                    answer(false); // Red / flipped
-                } else if (e.key === 'Escape') {
-                    const modal = document.getElementById('feedback-modal');
-                    if (!modal.classList.contains('hidden')) {
-                        closeFeedback();
+                if (wasActuallyCorrect) {
+                    if (currentLetter.type === 'symmetric') {
+                        praiseMsg = `You knew it looks perfect just the way it is! You're a direction superstar! 🌟`;
+                    } else {
+                        praiseMsg = `You spotted it right away! Amazing detective work! 🕵️‍♀️✨`;
                     }
+                } else {
+                    praiseMsg = `You caught that it needed fixing! What a clever girl! 💖`;
                 }
-            });
-            
-            // Add subtle hint
-            console.log('%c[Direction Detective] Keyboard: Left/G = Correct, Right/R = Flipped', 'color:#ccc');
+                
+                document.getElementById('praise-text').innerHTML = praiseMsg;
+                praiseScreen.style.display = 'block';
+                
+            } else {
+                // Gentle feedback / teaching moment
+                showFeedback();
+            }
         }
         
-        function init() {
-            initTailwind();
-            setupKeyboard();
+        function showFeedback() {
+            const feedbackScreen = document.getElementById('feedback-screen');
+            feedbackScreen.style.display = 'block';
             
-            // Easter egg: click header to go home
-            const header = document.querySelector('h1');
-            if (header) {
-                header.style.cursor = 'pointer';
-                header.addEventListener('click', () => {
-                    document.getElementById('game-screen').classList.add('hidden');
-                    document.getElementById('end-screen').classList.add('hidden');
-                    document.getElementById('start-screen').classList.remove('hidden');
+            // What you saw (the rotated version)
+            const whatSawEl = document.getElementById('feedback-what');
+            whatSawEl.textContent = currentLetter.char;
+            whatSawEl.style.transform = currentTransform;
+            whatSawEl.style.color = '#95A5A6';
+            
+            // Correct way (always upright + icon if any)
+            const correctEl = document.getElementById('feedback-correct');
+            correctEl.textContent = currentLetter.char;
+            correctEl.style.transform = 'rotate(0deg) scaleX(1)';
+            correctEl.style.color = '#1ABC9C';
+            
+            const iconEl = document.getElementById('feedback-icon');
+            if (currentLetter.icon) {
+                iconEl.innerHTML = currentLetter.icon;
+                iconEl.style.display = 'block';
+            } else {
+                iconEl.style.display = 'none';
+            }
+            
+            // Special note for symmetric letters
+            if (currentLetter.type === 'symmetric') {
+                const card = feedbackScreen.querySelector('.feedback-card');
+                if (!card.querySelector('.symmetric-note')) {
+                    const note = document.createElement('div');
+                    note.className = 'symmetric-note';
+                    note.innerHTML = `This letter looks the same no matter which way it faces!<br>It's always perfect! 🌈`;
+                    card.appendChild(note);
+                }
+            }
+        }
+        
+        // Easter egg: click the big letter to rotate it manually (for fun exploration)
+        document.addEventListener('DOMContentLoaded', function() {
+            const letterWrapper = document.getElementById('letter-wrapper');
+            if (letterWrapper) {
+                letterWrapper.addEventListener('click', function() {
+                    const letterEl = document.getElementById('big-letter');
+                    if (letterEl && letterEl.style.transform) {
+                        // Fun: rotate a bit more on click
+                        letterEl.style.transition = 'transform 0.8s ease';
+                        letterEl.style.transform = `rotate(${Math.random() * 360}deg) scaleX(${Math.random() > 0.5 ? 1 : -1})`;
+                        
+                        setTimeout(() => {
+                            if (letterEl) letterEl.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        }, 800);
+                    }
                 });
             }
             
-            // Welcome message in console for dev
-            console.log('%c🌟 Savannah\'s Direction Detective ready! Built with love for gentle learning.', 'color:#ff9ff3; font-size:9px');
+            // Keyboard support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'y' || e.key === 'Y') {
+                    const play = document.getElementById('play-screen');
+                    if (play.style.display !== 'none') handleAnswer(true);
+                }
+                if (e.key === 'n' || e.key === 'N') {
+                    const play = document.getElementById('play-screen');
+                    if (play.style.display !== 'none') handleAnswer(false);
+                }
+            });
+            
+            // Auto-start hint
+            console.log('%c[Savannah Direction Detective] Game loaded successfully! 💖', 'color:#9B59B6');
+        });
+        
+        // Confetti for extra celebration (gentle)
+        function launchHearts() {
+            const colors = ['#FF69B4', '#9B59B6', '#1ABC9C'];
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = ['💖','🦋','🌸','✨'][Math.floor(Math.random()*4)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '-50px';
+                    heart.style.fontSize = (20 + Math.random() * 25) + 'px';
+                    heart.style.zIndex = '9999';
+                    heart.style.transition = 'transform 2.5s ease, opacity 2.5s ease';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.transform = `translateY(${300 + Math.random()*400}px) rotate(${Math.random()*60 - 30}deg)`;
+                        heart.style.opacity = '0';
+                    }, 50);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 40);
+            }
         }
         
-        // Boot the app
-        window.onload = init;
+        // Bonus: clicking the header launches hearts
+        setTimeout(() => {
+            const header = document.querySelector('header');
+            if (header) {
+                header.addEventListener('click', launchHearts);
+            }
+        }, 1000);
     </script>
 </body>
 </html>
